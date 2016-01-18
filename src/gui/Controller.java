@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.control.TextField;
 
-public class  Controller {
+public class Controller {
 
     public TextField field0;
     public TextField field1;
