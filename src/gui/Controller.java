@@ -4,6 +4,7 @@ import game.GameManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class Controller {
@@ -17,6 +18,8 @@ public class Controller {
     public TextField field6;
     public TextField field7;
     public TextField field8;
+    public Label labelMessage;
+
     GameManager game = new GameManager();
 
     public void onMouseClick0(Event event) {doMove(0);}
@@ -43,6 +46,6 @@ public class Controller {
     void doMove(int field){
         TextField[] fieldarr = {field0, field1, field2, field3, field4, field5, field6, field7, field8};
         //fieldarr[field].setText("X");
-        game.theMove(field, fieldarr);
+        game.theMove(field, fieldarr, labelMessage);
     }
 }

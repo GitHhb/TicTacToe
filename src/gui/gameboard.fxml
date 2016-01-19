@@ -83,10 +83,15 @@
              </TextField>
          </children>
       </GridPane>
-      <Button fx:id="butQuit" mnemonicParsing="false" onAction="#doQuit" text="Quit" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="250.0" top="10.0" />
-         </GridPane.margin>
-      </Button>
+      <Pane GridPane.rowIndex="1">
+         <children>
+            <Label fx:id="labelMessage" layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="212.0" text="Tic Tac Toe">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="butQuit" layoutX="253.0" layoutY="2.0" mnemonicParsing="false" onAction="#doQuit" text="Quit" />
+         </children>
+      </Pane>
    </children>
 </GridPane>
