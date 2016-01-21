@@ -8,33 +8,32 @@ import javafx.scene.paint.Color;
  * Created by leandro on 17-1-2016.
  */
 public class GameManager {
-    int[] ttt = new int[9]; // 0 == no moves | 1 == human move | 2 == AI move
-    int winner = 0; // 0 == no winneryet | 1 == human | 2 == AI
-    boolean gameover = false; // true => we have a winner
     String message = ""; // message displayed to user
+    GameBoard game = new GameBoard(); // create new game
 
     public void theMove(int field, TextField[] fields, Label usermsg) {
         // field = player's move
         // fields = array to every TicTacToe tile
         // message = for displaying messages
 
-        if (gameover) { return; }
+        // Start with trying a move on field
+        if (! game.makeMove(field, 1))
+            // we can't make moves
+            // (only valid reason should be the game has ended or the field is occupied)
+            return;
 
-        // if field already contains a move, do nothing
-        if (ttt[field] != 0) return;
-
-        // register human move
-        ttt[field] = 1;
+        // Move made, now show move on the gameboard
         fields[field].setText("X");
 
         // Check if human wins
-        if (checkWin()) {
+        if (game.checkWin()) {
             usermsg.setText(message);
             usermsg.setTextFill(Color.web("Red"));
             return; // if human wins, stop the game
         }
 
-
+        // make AI move
+        /*
         // AI implementation
         for (int i = 0; i < 9; i++) {
             if (ttt[i] == 0) {
@@ -43,14 +42,15 @@ public class GameManager {
                 break;
             }
         }
+        */
 
         // Check if AI wins
-        if (checkWin()) {
+        if (game.checkWin()) {
             usermsg.setText(message);
             return; // if human wins, stop the game
         }
     }
-
+/*
     boolean winningRow(int p0, int p1, int p2){
         // first check if ttt[p0] contains a player move AND if ttt[p0] == ttt[p1] == ttt[p2]
         if (ttt[p0] != 0 && ttt[p0] == ttt[p1] && ttt[p0] == ttt[p2]){
@@ -82,5 +82,5 @@ public class GameManager {
             default: return "When this message is printed something has gone really wrong!";
         }
     }
-
+*/
 }
