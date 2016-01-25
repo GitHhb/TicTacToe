@@ -33,16 +33,16 @@ public class GameManager {
         }
 
         // make AI move
-        /*
+
         // AI implementation
         for (int i = 0; i < 9; i++) {
-            if (ttt[i] == 0) {
-                ttt[i] = 2;
+            if (game.ttt[i] == 0) {
+                game.ttt[i] = 2;
                 fields[i].setText("O");
                 break;
             }
         }
-        */
+
 
         // Check if AI wins
         if (game.checkWin()) {

@@ -17,7 +17,7 @@ public class AI {
     byte[] pos = new byte[9]; // a single game position,
     // for all possible game positions (represented as int's),
     // allPos indicates the nr of moves that lead to victory
-    HashMap<int, int> allPos = new HashMap<>();
+    HashMap<Integer, Integer> allPos = new HashMap<>();
 
     // Return:
     //  true  == at least one winning move is possible from this move
@@ -25,8 +25,9 @@ public class AI {
     private int nextMoves(String[] position, byte currentPlayer, byte otherPlayer) {
         // make a move by trying all possible empty fields in pos consecutively
         int nrWinningMoves = 0;
-        for (int i; i < pos.length; i++){
+        for (int i = 0; i < pos.length; i++){
             if (pos[i]  == 0){
+
                 // pos[i] empty, we can make a move
                 pos[i] = currentPlayer;
                 if (g.checkWin()) nrWinningMoves++;

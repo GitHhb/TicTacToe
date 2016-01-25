@@ -4,6 +4,14 @@ package game;
  * Created by leandro on 17-1-2016.
  */
 public class GameBoard {
+
+    // field nrs of winning positions
+    static byte[][] winningRows = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
+        {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
+        {0, 4, 8}, {2, 4, 6}
+    };
+
     // ttt = The game board
     int[] ttt = new int[9];     // 0 == no moves | 1 == human move | 2 == AI move
     int winner = 0;             // 0 == no winneryet | 1 == human | 2 == AI
@@ -40,18 +48,18 @@ public class GameBoard {
         return false;
     }
 
-    public boolean checkWin() {
+    boolean checkWin() {
         // Check if someone has a winning position
-        boolean winningPos = false;
+        boolean win = false;
 
-        winningPos = winningRow(0, 1, 2) || winningRow(3, 4, 5) || winningRow(6, 7, 8)
+        win = winningRow(0, 1, 2) || winningRow(3, 4, 5) || winningRow(6, 7, 8)
                   || winningRow(0, 3, 6) || winningRow(1, 4, 7) || winningRow(2, 5, 8)
                 || winningRow(0, 4, 8) || winningRow(2, 4, 6);
-        if (winningPos) {
+        if (win) {
             message = "Game won by " + player(winner);
             gameover = true;
         }
-        return winningPos;
+        return win;
     }
 
     public String player(int player){
