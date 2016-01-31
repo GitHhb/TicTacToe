@@ -5,16 +5,19 @@ package game;
  */
 public class GameBoard {
 
+    // Init STATIC
     // field nrs of winning positions
-    static byte[][] winningRows = {
+    final static byte[][] winningPos = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8},
         {0, 3, 6}, {1, 4, 7}, {2, 5, 8},
         {0, 4, 8}, {2, 4, 6}
     };
 
+    // Init Instance
     // ttt = The game board
     int[] ttt = new int[9];     // 0 == no moves | 1 == human move | 2 == AI move
     int winner = 0;             // 0 == no winneryet | 1 == human | 2 == AI
+    byte winningRow;            // index to array winningPos that indicates winning position
     boolean gameover = false;   // true => we have a winner
     String message = "";        // message displayed to user
 
@@ -39,10 +42,11 @@ public class GameBoard {
         return true;
     }
 
-    boolean winningRow(int p0, int p1, int p2){
-        // first check if ttt[p0] contains a player move AND if ttt[p0] == ttt[p1] == ttt[p2]
-        if (ttt[p0] != 0 && ttt[p0] == ttt[p1] && ttt[p0] == ttt[p2]){
-            winner = ttt[p0];
+    boolean isWinningPos(byte p){
+        // check if ttt[p0] contains a player move AND if ttt[0] == ttt[1] == ttt[2]
+        if (ttt[winningPos[p][0]] != 0 && ttt[winningPos[p][0]] == ttt[winningPos[p][1]] && ttt[winningPos[p][0]] == ttt[winningPos[p][2]]){
+            winner = ttt[winningPos[p][0]];
+            winningRow = p;
             return true;
         };
         return false;
@@ -52,16 +56,26 @@ public class GameBoard {
         // Check if someone has a winning position
         boolean win = false;
 
-        win = winningRow(0, 1, 2) || winningRow(3, 4, 5) || winningRow(6, 7, 8)
-                  || winningRow(0, 3, 6) || winningRow(1, 4, 7) || winningRow(2, 5, 8)
-                || winningRow(0, 4, 8) || winningRow(2, 4, 6);
+        //for (byte[] i : winningPos) {
+        for (byte i = 0; i < winningPos.length; i++) {
+            win = isWinningPos(i);
+            if (win) break;
+        }
+
+        /*
+        win = checkIfWinningPos(0, 1, 2) || checkIfWinningPos(3, 4, 5) || checkIfWinningPos(6, 7, 8)
+                  || checkIfWinningPos(0, 3, 6) || checkIfWinningPos(1, 4, 7) || checkIfWinningPos(2, 5, 8)
+                || checkIfWinningPos(0, 4, 8) || checkIfWinningPos(2, 4, 6);
+        */
+        /*
         if (win) {
             message = "Game won by " + player(winner);
             gameover = true;
         }
+        */
         return win;
     }
-
+/*
     public String player(int player){
         // Translate nr to player type: human OR AI
         switch (player){
@@ -70,5 +84,5 @@ public class GameBoard {
             default: return "When this message is printed something has gone really wrong!";
         }
     }
-
+*/
 }
