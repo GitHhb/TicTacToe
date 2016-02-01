@@ -14,12 +14,11 @@ public class GameBoard {
     };
 
     // Init Instance
-    // ttt = The game board
-    int[] ttt = new int[9];     // 0 == no moves | 1 == human move | 2 == AI move
+    // gameBoard = The game board
+    int[] gameBoard = new int[9];     // 0 == no moves | 1 == human move | 2 == AI move
     int winner = 0;             // 0 == no winneryet | 1 == human | 2 == AI
-    byte winningRow;            // index to array winningPos that indicates winning position
+    byte winningPosIndex = -1;            // index to array winningPos that indicates winning position
     boolean gameover = false;   // true => we have a winner
-    String message = "";        // message displayed to user
 
     // Goal: make move on field
     // Params:
@@ -28,38 +27,41 @@ public class GameBoard {
     // Return:
     //  true  == move made
     //  false == no move made (game ended | field occupied)
-
     boolean makeMove(int field, int player){
         // first check if we can make a move
-        if (gameover || (ttt[field] != 0))
+        if (gameover || (gameBoard[field] != 0))
             // Game has ended | field already contains a move
             return false;
 
-        // now we can make the move
-        ttt[field] = player;
+        // now make the move
+        gameBoard[field] = player;
 
         // confirm we made the move
         return true;
     }
 
+    // Goal: Check if winningPos[p] is a winning position
     boolean isWinningPos(byte p){
-        // check if ttt[p0] contains a player move AND if ttt[0] == ttt[1] == ttt[2]
-        if (ttt[winningPos[p][0]] != 0 && ttt[winningPos[p][0]] == ttt[winningPos[p][1]] && ttt[winningPos[p][0]] == ttt[winningPos[p][2]]){
-            winner = ttt[winningPos[p][0]];
-            winningRow = p;
-            return true;
-        };
-        return false;
+        // check if gameBoard[p0] contains a player move AND if gameBoard[0] == gameBoard[1] == gameBoard[2]
+        return (gameBoard[winningPos[p][0]] != 0 && gameBoard[winningPos[p][0]] == gameBoard[winningPos[p][1]]
+                && gameBoard[winningPos[p][0]] == gameBoard[winningPos[p][2]]);
+    }
+
+    void markWinningPos(byte p){
+        winner = gameBoard[winningPos[p][0]];
+        winningPosIndex = p;
+        gameover = true;
     }
 
     boolean checkWin() {
         // Check if someone has a winning position
-        boolean win = false;
 
         //for (byte[] i : winningPos) {
         for (byte i = 0; i < winningPos.length; i++) {
-            win = isWinningPos(i);
-            if (win) break;
+            if (isWinningPos(i)){
+                markWinningPos(i);
+                return true;
+            }
         }
 
         /*
@@ -73,7 +75,7 @@ public class GameBoard {
             gameover = true;
         }
         */
-        return win;
+        return false;
     }
 /*
     public String player(int player){

@@ -39,8 +39,8 @@ public class GameManager {
 
         // AI implementation
         for (int i = 0; i < 9; i++) {
-            if (game.ttt[i] == 0) {
-                game.ttt[i] = 2;
+            if (game.gameBoard[i] == 0) {
+                game.gameBoard[i] = 2;
                 fields[i].setText("O");
                 break;
             }

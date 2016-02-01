@@ -25,12 +25,19 @@ public class AI {
     private int nextMoves(String[] position, byte currentPlayer, byte otherPlayer) {
         // make a move by trying all possible empty fields in pos consecutively
         int nrWinningMoves = 0;
+
+        // 1 --> if we have a winning position:
+        //       stop checking for next moves and let caller know it's a winning pos
+
+        if (g.checkWin()) nrWinningMoves++;
+
+
+        // 2 --> compute outcome of all possible next moves
         for (int i = 0; i < pos.length; i++){
             if (pos[i]  == 0){
 
                 // pos[i] empty, we can make a move
                 pos[i] = currentPlayer;
-                if (g.checkWin()) nrWinningMoves++;
 
             }
         }
