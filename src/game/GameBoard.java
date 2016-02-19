@@ -17,8 +17,9 @@ public class GameBoard {
     // gameBoard = The game board
     int[] gameBoard = new int[9];     // 0 == no moves | 1 == human move | 2 == AI move
     int winner = 0;             // 0 == no winneryet | 1 == human | 2 == AI
-    byte winningPosIndex = -1;            // index to array winningPos that indicates winning position
+    byte winningPosIndex = -1;  // index to array winningPos that indicates winning position
     boolean gameover = false;   // true => we have a winner
+    byte movesLeft = 9;          // available moves left, if 0 => gameover
 
     // Goal: make move on field
     // Params:
@@ -35,25 +36,34 @@ public class GameBoard {
 
         // now make the move
         gameBoard[field] = player;
+        // update remaining moves
+        if (--movesLeft == 0) gameover = true;
+        // check if we have a winner
+        checkWin();
 
         // confirm we made the move
         return true;
     }
 
+    // Goal: Return if game is won by "player"
+    boolean wonBy(int player){
+        return winner == player;
+    }
+
     // Goal: Check if winningPos[p] is a winning position
-    boolean isWinningPos(byte p){
+    private boolean isWinningPos(byte p){
         // check if gameBoard[p0] contains a player move AND if gameBoard[0] == gameBoard[1] == gameBoard[2]
         return (gameBoard[winningPos[p][0]] != 0 && gameBoard[winningPos[p][0]] == gameBoard[winningPos[p][1]]
                 && gameBoard[winningPos[p][0]] == gameBoard[winningPos[p][2]]);
     }
 
-    void markWinningPos(byte p){
+    private void markWinningPos(byte p){
         winner = gameBoard[winningPos[p][0]];
         winningPosIndex = p;
         gameover = true;
     }
 
-    boolean checkWin() {
+    private boolean checkWin() {
         // Check if someone has a winning position
 
         //for (byte[] i : winningPos) {

@@ -29,7 +29,7 @@ public class AI {
         // 1 --> if we have a winning position:
         //       stop checking for next moves and let caller know it's a winning pos
 
-        if (g.checkWin()) nrWinningMoves++;
+        if (g.wonBy(otherPlayer)) nrWinningMoves++;
 
 
         // 2 --> compute outcome of all possible next moves

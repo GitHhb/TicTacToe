@@ -16,9 +16,9 @@ public class GameManager {
     public void theMove(int field, TextField[] fields, Label usermsg) {
         // field = player's move
         // fields = array to every TicTacToe tile
-        // message = for displaying messages
+        // usermsg = for displaying messages
 
-        // Start with trying a move on field
+        // Try to make the player's move
         if (! game.makeMove(field, 1))
             // we can't make moves
             // (only valid reason should be the game has ended or the field is occupied)
@@ -28,7 +28,7 @@ public class GameManager {
         fields[field].setText("X");
 
         // Check if human wins
-        if (game.checkWin()) {
+        if (game.wonBy(1)) {
             usermsg.setText(player1WinMsg);
             usermsg.setTextFill(Color.web("Red"));
             //fields[game.winningPos[game.winningRow][0]].setBackground(javafx.scene.layout.
@@ -40,17 +40,15 @@ public class GameManager {
         // AI implementation
         for (int i = 0; i < 9; i++) {
             if (game.gameBoard[i] == 0) {
-                game.gameBoard[i] = 2;
+                game.makeMove(i, 2);
                 fields[i].setText("O");
                 break;
             }
         }
 
-
         // Check if AI wins
-        if (game.checkWin()) {
+        if (game.wonBy(2)) {
             usermsg.setText(player2WinMsg);
-            return; // if human wins, stop the game
         }
     }
 
